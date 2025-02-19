@@ -4,7 +4,7 @@ $dbname = "messagerier4a10";
 $username = "root";
 $password = "";
 try {
-    $linkpdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Erreur de connexion : " . $e->getMessage());
@@ -21,13 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $contenu = htmlspecialchars($_POST['contenu']);
         try {
             // Requête préparée pour enregistrer le message
-            $stmt = $pdo->prepare("INSERT INTO messages (horaire, auteur, contenu) 
+            $stmt = $pdo->prepare("INSERT INTO messages (horaire, auteur, contenu)
                                    VALUES (:horaire, :auteur, :contenu)");
 
             $stmt->execute([
                 ':horaire' => $horaire,
                 ':auteur' => $auteur,
-                ':contenu' => $contenu                
+                ':contenu' => $contenu
             ]);
             exit;
         } catch (PDOException $e) {
