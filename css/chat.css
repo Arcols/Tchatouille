@@ -48,56 +48,53 @@ input[type="text"] {
 }
 
 .message {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 15px;
+    background-color: #e0e0e0;
+    max-width: 60%;
+    word-wrap: break-word;
 }
+
 .message:nth-child(even) {
-   background-color: #d3d3d3; /* gris clair */
+    align-self: flex-end;
+    background-color: #d1e7dd;
 }
-
-.message:nth-child(odd) {
-    background-color: #a9a9a9; /* gris foncé */
-}
-
 
 .message p {
     margin: 5px 0;
 }
 
-/* Pseudo */
-.message p:nth-child(1) {
+/* Pseudo and Time */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.message-header p {
+    margin: 0;
     font-weight: bold;
     font-size: 1.2em;
     color: #0056b3;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
 }
 
-/* message */
-.message p:nth-child(2) {
-    font-size: 1.1em;
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
-}
-
-/* heure */
-.message p:nth-child(3) {
+.message-header p.time {
     font-style: italic;
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    text-align: left;
+    font-size: 0.8em;
+    color: #888;
     display: none;
 }
 
-.message:nth-child(odd) p:nth-child(3) {
-    color: #d3d3d3; /* gris clair */
-}
-.message:nth-child(even) p:nth-child(3) {
-    color: #a9a9a9; /* gris foncé */
+/* Message content */
+.message-content {
+    font-size: 1.1em;
 }
 
-.message:hover p:nth-child(3) {
-    display: block;
+/* Show time on hover */
+.message:hover .message-header p.time {
+    display: inline;
 }

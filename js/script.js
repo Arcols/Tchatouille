@@ -7,7 +7,7 @@ window.onload = function() {
 function scrollToBottom() {
     var chatDiv = $("#chat");
     setTimeout(() => {
-        chatDiv.scrollTop(chatDiv.prop("scrollHeight"));
+        chatDiv.scrollTop(chatDiv.prop("scrollHeight")+10);
     }, 100); // Petit délai pour attendre la mise à jour du DOM
 }
 
@@ -40,6 +40,7 @@ function gererMessage(){
             requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu));
             recupererMessages();
             inputMessage.val('');
+            scrollToBottom();
         }
     });
 }
@@ -54,6 +55,7 @@ function recupererMessages() {
         }
     };
     requete.send();
+
 }
 
 function afficherMessages(messages) {
@@ -61,9 +63,11 @@ function afficherMessages(messages) {
     chatDiv.empty();
     messages.reverse().forEach(function(message) {
         var messageElement = $("<div>").addClass("message");
-        messageElement.append($("<p>").html(`${message.auteur}`));
-        messageElement.append($("<p>").text(message.contenu));
-        messageElement.append($("<p>").html(`${message.horaire}`));
+        var messageHeader = $("<div>").addClass("message-header");
+        messageHeader.append($("<p>").text(message.auteur));
+        messageHeader.append($("<p>").addClass("time").text(message.horaire));
+        messageElement.append(messageHeader);
+        messageElement.append($("<p>").addClass("message-content").text(message.contenu));
         chatDiv.append(messageElement);
     });
 }
