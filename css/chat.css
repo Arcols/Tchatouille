@@ -55,15 +55,13 @@ input[type="text"] {
     margin: 10px 0;
     border-radius: 15px;
     background-color: #e0e0e0;
-    max-width: 60%;
+    max-width: max-content;
     word-wrap: break-word;
 }
 
-.message:nth-child(even) {
-    align-self: flex-end;
-    background-color: #d1e7dd;
+.right{
+    margin-left:auto;
 }
-
 .message p {
     margin: 5px 0;
 }

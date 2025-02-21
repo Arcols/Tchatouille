@@ -1,6 +1,6 @@
 window.onload = function() {
     recupererMessages();
-    setInterval(recupererMessages, 2000); // 2 secondes
+    // setInterval(recupererMessages, 2000); // 2 secondes
     scrollToBottom();
 };
 
@@ -68,6 +68,9 @@ function afficherMessages(messages) {
         messageHeader.append($("<p>").addClass("time").text(message.horaire));
         messageElement.append(messageHeader);
         messageElement.append($("<p>").addClass("message-content").text(message.contenu));
+        if(`${message.auteur}` === getPseudo()){
+            messageElement.addClass("right");
+        }
         chatDiv.append(messageElement);
     });
 }
