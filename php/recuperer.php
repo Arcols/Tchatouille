@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $host = "localhost";
 $dbname = "messagerier4a10";
@@ -14,7 +15,7 @@ try {
 
 try {
     // Récupérer les 10 derniers messages
-    $query = "SELECT id, horaire, auteur, contenu FROM messages ORDER BY horaire DESC LIMIT 10";
+    $query = "SELECT id, horaire, auteur, contenu FROM messages ORDER BY horaire DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

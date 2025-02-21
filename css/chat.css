@@ -20,20 +20,18 @@ body {
 #messageDiv {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     background-color: #fff;
-    margin: 10px 0;
 }
 
 #chat {
     flex-grow: 1;
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-top : 10px;
+    border-radius: 5px 5px 0 0;
     background-color: #fff;
-    margin: 10px 0;
+    overflow-y: auto;
 }
 
 label {

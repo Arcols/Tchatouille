@@ -1,7 +1,15 @@
 window.onload = function() {
     recupererMessages();
-    setInterval(recupererMessages, 2000); // Mettre à jour les messages toutes les 2 secondes
+    setInterval(recupererMessages, 2000); // 2 secondes
+    scrollToBottom();
 };
+
+function scrollToBottom() {
+    var chatDiv = $("#chat");
+    setTimeout(() => {
+        chatDiv.scrollTop(chatDiv.prop("scrollHeight"));
+    }, 100); // Petit délai pour attendre la mise à jour du DOM
+}
 
 function getPseudo(){
     return pseudo;

@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Connexion réussie
                 session_start();
                 $_SESSION['pseudo'] = $pseudo; // Stocke le pseudo dans la session
-                header("Location: ./../pages"); // Redirige vers la page principale
+                header("Location: ./../pages/index.html.php"); // Redirige vers la page principale
                 echo "<p>Connexion réussie.</p>";
                 exit;
             } else {

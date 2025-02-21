@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['pseudo'])) {
+    header("Location: ./../index.html.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
