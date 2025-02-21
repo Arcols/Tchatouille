@@ -24,20 +24,22 @@ try {
 // Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifier si tous les champs sont remplis
-    if (isset($_POST['contenu'])) {
+    if (isset($_POST['contenu']) && isset($_POST['salle'])) {
         // Récupérer les données du formulaire
         date_default_timezone_set('Europe/Paris');
         $horaire = (new DateTime())->format("Y-m-d H:i:s");
         $contenu = htmlspecialchars($_POST['contenu']);
+        $salle = intval($_POST['salle']);
 
         try {
             // Requête préparée pour enregistrer le message
-            $stmt = $pdo->prepare("INSERT INTO messages (horaire, auteur, contenu)
-                                   VALUES (:horaire, :auteur, :contenu)");
+            $stmt = $pdo->prepare("INSERT INTO messages (horaire, auteur, contenu, salle)
+                                   VALUES (:horaire, :auteur, :contenu, :salle)");
             $stmt->execute([
                 ':horaire' => $horaire,
                 ':auteur' => $auteur,
-                ':contenu' => $contenu
+                ':contenu' => $contenu,
+                ':salle' => $salle
             ]);
             exit;
         } catch (PDOException $e) {

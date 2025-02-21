@@ -10,28 +10,48 @@ body {
     background: linear-gradient(to bottom, var(--hard-blue), var(--blue), var(--light-blue));
 }
 
-.container {
+#container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+#salles {
+    width: 25%;
+    background-color: #f0f0f0;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+.container-chat {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 75%;
     height: 100%;
+    background-color: #f9f9f9;
 }
 
 #messageDiv {
-    width: 100%;
-    padding: 10px;
-    border-radius: 0 0 5px 5px;
+    width: 90%;
+    padding: 10px 5%;
+    border-radius: 0 0 10px 10px;
     background-color: #fff;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #chat {
     flex-grow: 1;
-    width: 100%;
-    padding: 10px;
-    margin-top : 10px;
-    border-radius: 5px 5px 0 0;
+    width: 98%;
+    padding: 10px 1%;
+    margin-top: 10px;
+    border-radius: 10px 10px 0 0;
     background-color: #fff;
     overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -40,11 +60,12 @@ label {
 }
 
 input[type="text"] {
-    width: 80%;
-    padding: 8px;
+    width: 100%;
+    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .message {
@@ -59,9 +80,11 @@ input[type="text"] {
     word-wrap: break-word;
 }
 
-.right{
-    margin-left:auto;
+.right {
+    margin-left: auto;
+    background-color: #d1e7dd;
 }
+
 .message p {
     margin: 5px 0;
 }
@@ -76,7 +99,7 @@ input[type="text"] {
 .message-header p {
     margin: 0;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
     color: #0056b3;
 }
 
@@ -89,10 +112,58 @@ input[type="text"] {
 
 /* Message content */
 .message-content {
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 /* Show time on hover */
 .message:hover .message-header p.time {
     display: inline;
+}
+
+/* Styles for salles */
+.salle {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.salle:hover {
+    background-color: #d0d0d0;
+}
+
+.salle h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #0056b3;
+}
+
+.salle p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #333;
+}
+
+.salle .dernier-message {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #888;
+}
+
+
+.salle.highlight {
+    background-color: #ffffff;
+    transition: background-color 0.5s ease;
+}
+
+.salle.active {
+    background-color: #d1e7dd;
+    border-left: 5px solid #0056b3;
+}
+
+.salle .dernier-message.new {
+    font-weight: bold;
+    color: #000000;
 }

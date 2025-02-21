@@ -13,10 +13,13 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
+$salleId = isset($_GET['salle']) ? intval($_GET['salle']) : 0;
+
 try {
-    // Récupérer les 10 derniers messages
-    $query = "SELECT id, horaire, auteur, contenu FROM messages ORDER BY horaire DESC";
+    // Récupérer les messages de la salle sélectionnée
+    $query = "SELECT id, horaire, auteur, contenu FROM messages WHERE salle = :salle ORDER BY horaire DESC";
     $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':salle', $salleId, PDO::PARAM_INT);
     $stmt->execute();
 
     $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);

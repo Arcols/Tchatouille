@@ -16,13 +16,18 @@ if (!isset($_SESSION['pseudo'])) {
     <link rel="stylesheet" href="./../css/chat.css">
 </head>
 <body>
-    <div class="container">
-        <div id="chat">
-            <!-- Le contenu du chat sera ici -->
+    <div id="container">
+        <div id="salles">
+            <!-- Les salles seront ici -->
         </div>
-        <div id="messageDiv">
-            <label for="message">Entrez votre message :</label>
-            <input type="text" id="message" name="message" value="">
+        <div class="container-chat">
+            <div id="chat">
+                <!-- Le contenu du chat sera ici -->
+            </div>
+            <div id="messageDiv">
+                <label for="message">Entrez votre message :</label>
+                <input type="text" id="message" name="message" value="">
+            </div>
         </div>
     </div>
     <script>

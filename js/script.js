@@ -1,53 +1,68 @@
 window.onload = function() {
-    recupererMessages();
-    // setInterval(recupererMessages, 2000); // 2 secondes
+    recupererSalles();
+    // Initialiser avec la première salle
+    setTimeout(() => {
+        var firstSalle = $(".salle").first();
+        if (firstSalle.length) {
+            changerSalle(firstSalle.data("id"));
+        }
+    }, 500);
     scrollToBottom();
+    setInterval(() => {
+        var activeSalleId = $(".salle.active").data("id");
+        if (activeSalleId) {
+            recupererMessages(activeSalleId);
+        }
+        actualiserDerniersMessages();
+    }, 2000); // Actualiser les messages et les derniers messages toutes les 2 secondes
 };
 
 function scrollToBottom() {
     var chatDiv = $("#chat");
     setTimeout(() => {
-        chatDiv.scrollTop(chatDiv.prop("scrollHeight")+10);
+        chatDiv.scrollTop(chatDiv.prop("scrollHeight") + 10);
     }, 100); // Petit délai pour attendre la mise à jour du DOM
 }
 
-function getPseudo(){
+function getPseudo() {
     return pseudo;
 }
 
-function getMessage(){
+function getMessage() {
     return $('#message').val();
 }
 
-function gererMessage(){
+function gererMessage() {
     var inputMessage = $('#message');
-    inputMessage.keypress(function (e) {
+    inputMessage.keypress(function(e) {
         if (e.which === 13) {
             var auteur = getPseudo();
-            if(auteur === ''){
+            if (auteur === '') {
                 alert('Veuillez saisir un pseudo');
                 return;
             }
             var contenu = getMessage();
+            var salleId = $(".salle.active").data("id");
             var requete = new XMLHttpRequest();
             requete.open("POST", "./../php/enregistrer.php", true);
             requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             requete.onreadystatechange = function() {
                 if (requete.readyState === 4 && requete.status === 200) {
                     console.log("Message enregistré avec succès");
+                    recupererMessages(salleId);
+                    actualiserDerniersMessages(); // Actualiser les derniers messages après l'envoi d'un message
                 }
             };
-            requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu));
-            recupererMessages();
+            requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu) + "&salle=" + salleId);
             inputMessage.val('');
             scrollToBottom();
         }
     });
 }
 
-function recupererMessages() {
+function recupererMessages(salleId) {
     var requete = new XMLHttpRequest();
-    requete.open("GET", "./../php/recuperer.php", true);
+    requete.open("GET", "./../php/recuperer.php?salle=" + salleId, true);
     requete.onreadystatechange = function() {
         if (requete.readyState === 4 && requete.status === 200) {
             var messages = JSON.parse(requete.responseText);
@@ -55,7 +70,6 @@ function recupererMessages() {
         }
     };
     requete.send();
-
 }
 
 function afficherMessages(messages) {
@@ -68,11 +82,71 @@ function afficherMessages(messages) {
         messageHeader.append($("<p>").addClass("time").text(message.horaire));
         messageElement.append(messageHeader);
         messageElement.append($("<p>").addClass("message-content").text(message.contenu));
-        if(`${message.auteur}` === getPseudo()){
+        if (`${message.auteur}` === getPseudo()) {
             messageElement.addClass("right");
         }
         chatDiv.append(messageElement);
     });
+}
+
+function recupererSalles() {
+    var requete = new XMLHttpRequest();
+    requete.open("GET", "./../php/salles.php", true);
+    requete.onreadystatechange = function() {
+        if (requete.readyState === 4 && requete.status === 200) {
+            var salles = JSON.parse(requete.responseText);
+            afficherSalles(salles);
+        } else if (requete.readyState === 4) {
+            console.error("Erreur lors de la récupération des salles : " + requete.status);
+        }
+    };
+    requete.send();
+}
+
+function afficherSalles(salles) {
+    var sallesDiv = $("#salles");
+    sallesDiv.empty();
+    salles.forEach(function(salle) {
+        var salleElement = $("<div>").addClass("salle").attr("data-id", salle.id);
+        salleElement.append($("<h3>").text(salle.nom));
+        salleElement.append($("<p>").addClass("dernier-message").text(salle.dernier_message));
+        salleElement.on("click", function() {
+            changerSalle(salle.id);
+        });
+        sallesDiv.append(salleElement);
+    });
+}
+
+function changerSalle(salleId) {
+    // Mettre à jour l'interface utilisateur pour indiquer la salle sélectionnée
+    $(".salle").removeClass("active");
+    $(".salle[data-id='" + salleId + "']").addClass("active");
+    $(".salle[data-id='" + salleId + "'] .dernier-message").removeClass("new");
+
+    // Récupérer les messages de la salle sélectionnée
+    recupererMessages(salleId);
+}
+
+function actualiserDerniersMessages() {
+    var requete = new XMLHttpRequest();
+    requete.open("GET", "./../php/salles.php", true);
+    requete.onreadystatechange = function() {
+        if (requete.readyState === 4 && requete.status === 200) {
+            var salles = JSON.parse(requete.responseText);
+            salles.forEach(function(salle) {
+                var salleElement = $(".salle[data-id='" + salle.id + "']");
+                var dernierMessageElement = salleElement.find(".dernier-message");
+                var dernierMessage = dernierMessageElement.text();
+                if (dernierMessage !== salle.dernier_message) {
+                    dernierMessageElement.text(salle.dernier_message);
+                    if (!salleElement.hasClass("active")) {
+                        dernierMessageElement.addClass("new");
+                    }
+                }
+            });
+        }
+    };
+    requete.send();
 }
 
 gererMessage();
