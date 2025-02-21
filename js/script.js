@@ -1,28 +1,28 @@
 window.onload = function() {
-    fetchMessages();
-    setInterval(fetchMessages, 2000); // Update messages every 2 seconds
+    recupererMessages();
+    setInterval(recupererMessages, 2000); // Mettre à jour les messages toutes les 2 secondes
 };
 
-function getUsername(){
-    return $('#pseudo').val();
+function getPseudo(){
+    return pseudo;
 }
 
 function getMessage(){
     return $('#message').val();
 }
 
-function handleMessage(){
+function gererMessage(){
     var inputMessage = $('#message');
     inputMessage.keypress(function (e) {
-        if (e.which == 13) {
-            var auteur = getUsername();
+        if (e.which === 13) {
+            var auteur = getPseudo();
             if(auteur === ''){
                 alert('Veuillez saisir un pseudo');
                 return;
             }
             var contenu = getMessage();
             var requete = new XMLHttpRequest();
-            requete.open("POST", "./php/enregistrer.php", true);
+            requete.open("POST", "./../php/enregistrer.php", true);
             requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             requete.onreadystatechange = function() {
                 if (requete.readyState === 4 && requete.status === 200) {
@@ -30,27 +30,27 @@ function handleMessage(){
                 }
             };
             requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu));
-            fetchMessages();
+            recupererMessages();
             inputMessage.val('');
         }
     });
 }
 
-function fetchMessages() {
+function recupererMessages() {
     var requete = new XMLHttpRequest();
-    requete.open("GET", "./php/recuperer.php", true);
+    requete.open("GET", "./../php/recuperer.php", true);
     requete.onreadystatechange = function() {
         if (requete.readyState === 4 && requete.status === 200) {
             var messages = JSON.parse(requete.responseText);
-            displayMessages(messages);
+            afficherMessages(messages);
         }
     };
     requete.send();
 }
 
-function displayMessages(messages) {
+function afficherMessages(messages) {
     var chatDiv = $("#chat");
-    chatDiv.empty(); // Clear previous messages
+    chatDiv.empty();
     messages.reverse().forEach(function(message) {
         var messageElement = $("<div>").addClass("message");
         messageElement.append($("<p>").html(`${message.auteur}`));
@@ -60,4 +60,4 @@ function displayMessages(messages) {
     });
 }
 
-handleMessage();
+gererMessage();

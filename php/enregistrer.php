@@ -1,4 +1,15 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
+$auteur = "";
+if(!isset($_SESSION['pseudo'])){
+    header("Location: ./../index.html.php");
+    exit;
+}else{
+    $auteur = $_SESSION['pseudo'];
+}
+
 $host = "localhost";
 $dbname = "messagerier4a10";
 $username = "root";
@@ -13,17 +24,16 @@ try {
 // Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifier si tous les champs sont remplis
-    if (isset($_POST['auteur'], $_POST['contenu'])) {
+    if (isset($_POST['contenu'])) {
         // Récupérer les données du formulaire
         date_default_timezone_set('Europe/Paris');
         $horaire = (new DateTime())->format("Y-m-d H:i:s");
-        $auteur = htmlspecialchars($_POST['auteur']);
         $contenu = htmlspecialchars($_POST['contenu']);
+
         try {
             // Requête préparée pour enregistrer le message
             $stmt = $pdo->prepare("INSERT INTO messages (horaire, auteur, contenu)
                                    VALUES (:horaire, :auteur, :contenu)");
-
             $stmt->execute([
                 ':horaire' => $horaire,
                 ':auteur' => $auteur,
