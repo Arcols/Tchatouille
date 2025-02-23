@@ -167,3 +167,17 @@ input[type="text"] {
     font-weight: bold;
     color: #000000;
 }
+
+#ajoutSalle {
+    position: absolute;
+    bottom: 10px;
+    transform: translateX(-50%);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 1000;
+}

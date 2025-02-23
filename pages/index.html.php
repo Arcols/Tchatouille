@@ -20,6 +20,7 @@ if (!isset($_SESSION['pseudo'])) {
         <div id="salles">
             <!-- Les salles seront ici -->
         </div>
+        <button onclick="window.location.href='./ajoutsalle.html.php'" id="ajoutSalle">Ajouter une salle</button>
         <div class="container-chat">
             <div id="chat">
                 <!-- Le contenu du chat sera ici -->
