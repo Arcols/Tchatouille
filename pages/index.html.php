@@ -34,6 +34,6 @@ if (!isset($_SESSION['pseudo'])) {
     <script>
         var pseudo = "<?php echo isset($_SESSION['pseudo']) ? $_SESSION['pseudo'] : ''; ?>";
     </script>
-    <script src="../js/script.js"></script>
+    <script src="../js/salle.js"></script>
 </body>
 </html>

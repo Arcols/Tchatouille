@@ -17,16 +17,16 @@ try {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['nom']) || !isset($_POST['description']) || !isset($_POST['users'])) {
-        die("Veuillez remplir tous les champs.");
+    if (!isset($_POST['users']) || empty($_POST['users'])) {
+        die("Veuillez sélectionner au moins un utilisateur.");
     }
 
     $nom = trim($_POST['nom']);
-    $description = trim($_POST['description']);
+    $description = isset($_POST['description']) ? trim($_POST['description']) : null;
     $users = array_map('trim', explode(',', $_POST['users']));
     $admin = $_SESSION['pseudo']; // L'utilisateur connecté est l'admin
 
-    if (empty($nom) || empty($description)) {
+    if (empty($nom)) {
         die("Données invalides.");
     }
 
@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([':id_salle' => $id_salle, ':pseudo' => $admin, ':role' => 'admin']);
 
         // Ajouter les autres utilisateurs en tant que "user"
+        $stmt = $pdo->prepare("INSERT INTO acces (id_salle, user, role) VALUES (:id_salle, :pseudo, :role)");
         foreach ($users as $pseudo) {
             if (!empty($pseudo) && $pseudo !== $admin) { // Évite d'ajouter l'admin en double
                 $stmt->execute([':id_salle' => $id_salle, ':pseudo' => $pseudo, ':role' => 'user']);
@@ -53,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $pdo->commit();
         header("Location: ./../pages/index.html.php");
+        exit;
     } catch (PDOException $e) {
         $pdo->rollBack();
         die("Erreur lors de l'ajout de la salle : " . $e->getMessage());

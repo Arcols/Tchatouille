@@ -56,3 +56,63 @@ button {
 button:hover {
     background-color: var(--soft-blue);
 }
+
+select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    appearance: none; /* Retire l'apparence par défaut du select */
+    text-align: left;
+}
+
+option {
+    padding: 10px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    background-color: var(--blue);
+    color: white;
+}
+
+tr:hover {
+    background-color: var(--soft-blue);
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+th {
+    padding: 10px;
+    text-align: left;
+    color: white;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+td:hover {
+    background-color: var(--light-gray);
+}
+
+
+
