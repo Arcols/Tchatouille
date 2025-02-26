@@ -33,6 +33,11 @@
                 <input type="password" name="mdp" placeholder="Mot de passe" required="">
                 <button>Se connecter</button>
             </form>
+            <?php
+            if (isset($_GET['error']) && $_GET['error'] === 'user_notexists') {
+                echo "<p style='color:red; text-align:center'>L'utilisateur ou le mot de passe n'existe pas.</p>";
+            }
+            ?>
         </div>
     </div>
 </body>

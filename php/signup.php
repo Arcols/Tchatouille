@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pseudo = $_POST['pseudo'];
         $mdp = $_POST['mdp'];
 
-        // Supprimer les caractères invisibles du mot de passe
         $mdp = trim($mdp);
 
         $cle = "cleuwuchan";
@@ -37,6 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insérer l'utilisateur dans la base de données
             $stmt = $pdo->prepare("INSERT INTO utilisateur (pseudo, mdp) VALUES (:pseudo, :mdp)");
             $stmt->execute([':pseudo' => $pseudo, ':mdp' => $mdp_hache]);
+
+            // Ajouter l'utilisateur à la salle 1
+            $stmt = $pdo->prepare("INSERT INTO acces (id_salle, user, role) VALUES (1, :pseudo, 'user')");
+            $stmt->execute([':pseudo' => $pseudo]);
+
             // Rediriger vers la page principale avec un message de succès
             header("Location: ./../index.html.php?success=user_added");
             exit();

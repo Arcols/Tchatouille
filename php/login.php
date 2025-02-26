@@ -35,10 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<p>Connexion réussie.</p>";
                 exit;
             } else {
-                echo "<p>Identifiant ou mot de passe incorrect.</p>";
+            header("Location: ./../index.html.php?error=user_notexists");
+                exit;
             }
         } else {
-            echo "<p>Identifiant ou mot de passe incorrect.</p>";
+            header("Location: ./../index.html.php?error=user_notexists");
+            exit;
         }
     } else {
         echo "<p>Veuillez remplir tous les champs.</p>";
