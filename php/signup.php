@@ -1,9 +1,10 @@
 <?php
 
-$host = "localhost";
-$dbname = "messagerier4a10";
-$username = "root";
-$password = "";
+$host = "mysql-tchatouille.alwaysdata.net";
+$dbname = "tchatouille_bdd";
+$username = "400943";
+$password = '$iutinfo';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Connexion à la base de données
     try {
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($count > 0) {
             // Rediriger vers la page principale avec un message d'erreur
-            header("Location: ./../index.html.php?error=user_exists");
+            header("Location: ./../index.php?error=user_exists");
             exit();
         } else {
             // Insérer l'utilisateur dans la base de données
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':pseudo' => $pseudo]);
 
             // Rediriger vers la page principale avec un message de succès
-            header("Location: ./../index.html.php?success=user_added");
+            header("Location: ./../index.php?success=user_added");
             exit();
         }
     } else {

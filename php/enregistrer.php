@@ -4,16 +4,17 @@ if(!isset($_SESSION)){
 }
 $auteur = "";
 if(!isset($_SESSION['pseudo'])){
-    header("Location: ./../index.html.php");
+    header("Location: ./../index.php");
     exit;
 }else{
     $auteur = $_SESSION['pseudo'];
 }
 
-$host = "localhost";
-$dbname = "messagerier4a10";
-$username = "root";
-$password = "";
+$host = "mysql-tchatouille.alwaysdata.net";
+$dbname = "tchatouille_bdd";
+$username = "400943";
+$password = '$iutinfo';
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

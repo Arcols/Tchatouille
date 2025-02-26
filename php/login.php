@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-$host = "localhost";
-$dbname = "messagerier4a10";
-$username = "root";
-$password = "";
+$host = "mysql-tchatouille.alwaysdata.net";
+$dbname = "tchatouille_bdd";
+$username = "400943";
+$password = '$iutinfo';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Connexion à la base de données
     try {
@@ -35,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<p>Connexion réussie.</p>";
                 exit;
             } else {
-            header("Location: ./../index.html.php?error=user_notexists");
+            header("Location: ./../index.php?error=user_notexists");
                 exit;
             }
         } else {
-            header("Location: ./../index.html.php?error=user_notexists");
+            header("Location: ./../index.php?error=user_notexists");
             exit;
         }
     } else {

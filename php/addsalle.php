@@ -4,10 +4,10 @@ if (!isset($_SESSION['pseudo'])) {
     die("Accès refusé. Veuillez vous connecter.");
 }
 
-$host = "localhost";
-$dbname = "messagerier4a10";
-$username = "root";
-$password = "";
+$host = "mysql-tchatouille.alwaysdata.net";
+$dbname = "tchatouille_bdd";
+$username = "400943";
+$password = '$iutinfo';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

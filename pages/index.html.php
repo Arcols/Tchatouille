@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['pseudo'])) {
-    header("Location: ./../index.html.php");
+    header("Location: ./../index.php");
     exit;
 }
 ?>
@@ -11,7 +11,7 @@ if (!isset($_SESSION['pseudo'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MessagerieChat</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link rel="stylesheet" href="./../css/global.css">
     <link rel="stylesheet" href="./../css/chat.css">
 </head>
