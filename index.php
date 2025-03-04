@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <title>Page de connection</title>
+    <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="./css/global.css">
     <link rel="stylesheet" type="text/css" href="./css/connection.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">

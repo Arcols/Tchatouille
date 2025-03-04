@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('Content-Type: application/json; charset=UTF-8');
 
 $host = "mysql-tchatouille.alwaysdata.net";
 $dbname = "tchatouille_bdd";
@@ -25,7 +26,6 @@ try {
     $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Retourner les messages en JSON
-    header("Content-Type: application/json");
     echo json_encode($messages, JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

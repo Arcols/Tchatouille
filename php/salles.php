@@ -32,7 +32,7 @@ try {
 
     $salles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    header("Content-Type: application/json");
+    header('Content-Type: application/json; charset=UTF-8');
     echo json_encode($salles, JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

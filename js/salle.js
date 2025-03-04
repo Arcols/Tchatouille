@@ -45,7 +45,7 @@ function gererMessage() {
             var salleId = $(".salle.active").data("id");
             var requete = new XMLHttpRequest();
             requete.open("POST", "./../php/enregistrer.php", true);
-            requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
             requete.onreadystatechange = function() {
                 if (requete.readyState === 4 && requete.status === 200) {
                     console.log("Message enregistré avec succès");
@@ -81,7 +81,8 @@ function afficherMessages(messages) {
         messageHeader.append($("<p>").text(message.auteur));
         messageHeader.append($("<p>").addClass("time").text(message.horaire));
         messageElement.append(messageHeader);
-        messageElement.append($("<p>").addClass("message-content").text(message.contenu));
+        var messageEncode = htmlspecialchars_decode(message.contenu)
+        messageElement.append($("<p>").addClass("message-content").text(insertRetourLigne(messageEncode,50)));
         if (`${message.auteur}` === getPseudo()) {
             messageElement.addClass("right");
         }
@@ -147,6 +148,37 @@ function actualiserDerniersMessages() {
         }
     };
     requete.send();
+}
+
+/**
+ * htmlspecialchars_decode mais en javascript
+ * @param str à décoder
+ * @returns str décodé
+ */
+function htmlspecialchars_decode(str) {
+    var map = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'"
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) { return map[m]; });
+}
+
+/**
+ * Insère des sauts de ligne dans une chaîne de caractères
+ * @param str
+ * @param maxLength
+ * @returns {string}
+ */
+function insertRetourLigne(str, maxLength) {
+    var result = '';
+    while (str.length > maxLength) {
+        result += str.substring(0, maxLength) + '\n';
+        str = str.substring(maxLength);
+    }
+    return result + str;
 }
 
 gererMessage();
