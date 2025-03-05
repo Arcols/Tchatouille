@@ -21,7 +21,7 @@ function scrollToBottom() {
     var chatDiv = $("#chat");
     setTimeout(() => {
         chatDiv.scrollTop(chatDiv.prop("scrollHeight") + 10);
-    }, 100); // Petit délai pour attendre la mise à jour du DOM
+    }, 200); // Petit délai pour attendre la mise à jour du DOM
 }
 
 function getPseudo() {
@@ -110,7 +110,7 @@ function afficherSalles(salles) {
     salles.forEach(function(salle) {
         var salleElement = $("<div>").addClass("salle").attr("data-id", salle.id);
         salleElement.append($("<h3>").text(salle.nom));
-        salleElement.append($("<p>").addClass("dernier-message").text(salle.dernier_message));
+        salleElement.append($("<p>").addClass("dernier-message").text(htmlspecialchars_decode(salle.dernier_message)));
         salleElement.on("click", function() {
             changerSalle(salle.id);
         });
@@ -126,6 +126,10 @@ function changerSalle(salleId) {
 
     // Récupérer les messages de la salle sélectionnée
     recupererMessages(salleId);
+    setTimeout(() => {
+        scrollToBottom();
+    }, 500);
+
 }
 
 function actualiserDerniersMessages() {
@@ -139,7 +143,7 @@ function actualiserDerniersMessages() {
                 var dernierMessageElement = salleElement.find(".dernier-message");
                 var dernierMessage = dernierMessageElement.text();
                 if (dernierMessage !== salle.dernier_message) {
-                    dernierMessageElement.text(salle.dernier_message);
+                    dernierMessageElement.text(htmlspecialchars_decode(salle.dernier_message));
                     if (!salleElement.hasClass("active")) {
                         dernierMessageElement.addClass("new");
                     }
