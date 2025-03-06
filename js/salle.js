@@ -160,6 +160,9 @@ function actualiserDerniersMessages() {
  * @returns str décodé
  */
 function htmlspecialchars_decode(str) {
+    if (str === null || str === undefined) {
+        return '';
+    }
     var map = {
         '&amp;': '&',
         '&lt;': '<',
