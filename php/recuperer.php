@@ -18,7 +18,7 @@ $salleId = isset($_GET['salle']) ? intval($_GET['salle']) : 0;
 
 try {
     // Récupérer les messages de la salle sélectionnée
-    $query = "SELECT id, horaire, auteur, contenu FROM messages WHERE salle = :salle ORDER BY horaire DESC";
+    $query = "SELECT id, horaire, auteur, contenu FROM messages WHERE salle = :salle ORDER BY horaire DESC LIMIT 10";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':salle', $salleId, PDO::PARAM_INT);
     $stmt->execute();

@@ -28,6 +28,7 @@ if (!isset($_SESSION['pseudo'])) {
             <div id="messageDiv">
                 <label for="message">Entrez votre message :</label>
                 <input type="text" id="message" name="message" value="">
+                <button id="envoyerMessage">Envoyer</button>
             </div>
         </div>
     </div>

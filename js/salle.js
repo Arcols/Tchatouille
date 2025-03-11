@@ -32,31 +32,37 @@ function getMessage() {
     return $('#message').val();
 }
 
+function caca(inputMessage){
+    var auteur = getPseudo();
+    if (auteur === '') {
+        alert('Veuillez saisir un pseudo');
+        return;
+    }
+    var contenu = getMessage();
+    var salleId = $(".salle.active").data("id");
+    var requete = new XMLHttpRequest();
+    requete.open("POST", "./../php/enregistrer.php", true);
+    requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    requete.onreadystatechange = function() {
+        if (requete.readyState === 4 && requete.status === 200) {
+            recupererMessages(salleId);
+            actualiserDerniersMessages(); // Actualiser les derniers messages après l'envoi d'un message
+        }
+    };
+    requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu) + "&salle=" + salleId);
+    inputMessage.val('');
+    scrollToBottom();
+}
+
 function gererMessage() {
     var inputMessage = $('#message');
     inputMessage.keypress(function(e) {
         if (e.which === 13) {
-            var auteur = getPseudo();
-            if (auteur === '') {
-                alert('Veuillez saisir un pseudo');
-                return;
-            }
-            var contenu = getMessage();
-            var salleId = $(".salle.active").data("id");
-            var requete = new XMLHttpRequest();
-            requete.open("POST", "./../php/enregistrer.php", true);
-            requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-            requete.onreadystatechange = function() {
-                if (requete.readyState === 4 && requete.status === 200) {
-                    console.log("Message enregistré avec succès");
-                    recupererMessages(salleId);
-                    actualiserDerniersMessages(); // Actualiser les derniers messages après l'envoi d'un message
-                }
-            };
-            requete.send("auteur=" + encodeURIComponent(auteur) + "&contenu=" + encodeURIComponent(contenu) + "&salle=" + salleId);
-            inputMessage.val('');
-            scrollToBottom();
+            caca(inputMessage);
         }
+    });
+    $('#envoyerMessage').click(function() {
+        caca(inputMessage);
     });
 }
 
@@ -74,21 +80,23 @@ function recupererMessages(salleId) {
 
 function afficherMessages(messages) {
     var chatDiv = $("#chat");
-    chatDiv.empty();
     messages.reverse().forEach(function(message) {
-        var messageElement = $("<div>").addClass("message");
+        var messageElement = $("<div>").addClass("message").attr("data-id", message.id);
         var messageHeader = $("<div>").addClass("message-header");
         messageHeader.append($("<p>").text(message.auteur));
         messageHeader.append($("<p>").addClass("time").text(message.horaire));
         messageElement.append(messageHeader);
-        var messageEncode = htmlspecialchars_decode(message.contenu)
-        messageElement.append($("<p>").addClass("message-content").text(insertRetourLigne(messageEncode,50)));
-        if (`${message.auteur}` === getPseudo()) {
+        var messageEncode = htmlspecialchars_decode(message.contenu);
+        messageElement.append($("<p>").addClass("message-content").text(insertRetourLigne(messageEncode, 50)));
+        if (message.auteur === getPseudo()) {
             messageElement.addClass("right");
         }
-        chatDiv.append(messageElement);
+        if (!chatDiv.find(".message[data-id='" + message.id + "']").length) {
+            chatDiv.append(messageElement);
+        }
     });
 }
+
 
 function recupererSalles() {
     var requete = new XMLHttpRequest();
@@ -120,6 +128,8 @@ function afficherSalles(salles) {
 
 function changerSalle(salleId) {
     // Mettre à jour l'interface utilisateur pour indiquer la salle sélectionnée
+    var chatDiv = $("#chat");
+    chatDiv.empty();
     $(".salle").removeClass("active");
     $(".salle[data-id='" + salleId + "']").addClass("active");
     $(".salle[data-id='" + salleId + "'] .dernier-message").removeClass("new");
