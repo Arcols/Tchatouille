@@ -32,7 +32,7 @@ function getMessage() {
     return $('#message').val();
 }
 
-function caca(inputMessage){
+function envoyerMessage(inputMessage){
     var auteur = getPseudo();
     if (auteur === '') {
         alert('Veuillez saisir un pseudo');
@@ -58,11 +58,11 @@ function gererMessage() {
     var inputMessage = $('#message');
     inputMessage.keypress(function(e) {
         if (e.which === 13) {
-            caca(inputMessage);
+            envoyerMessage(inputMessage);
         }
     });
     $('#envoyerMessage').click(function() {
-        caca(inputMessage);
+        envoyerMessage(inputMessage);
     });
 }
 
