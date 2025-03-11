@@ -39,6 +39,9 @@ function envoyerMessage(inputMessage){
         return;
     }
     var contenu = getMessage();
+    if (contenu === '') {
+        return;
+    }
     var salleId = $(".salle.active").data("id");
     var requete = new XMLHttpRequest();
     requete.open("POST", "./../php/enregistrer.php", true);
