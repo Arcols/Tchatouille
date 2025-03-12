@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une Salle</title>
+    <title>Tchatouille</title>
+    <link rel="icon" type="image/webp" href="./../anex/logoicone.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link rel="stylesheet" href="./../css/global.css">
     <link rel="stylesheet" href="./../css/ajoutsalle.css">

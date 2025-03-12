@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Page de connection</title>
+    <title>Tchatouille</title>
+    <link rel="icon" type="image/webp" href="./anex/logoicone.png">
     <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="./css/global.css">
     <link rel="stylesheet" type="text/css" href="./css/connection.css">

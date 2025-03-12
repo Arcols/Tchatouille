@@ -39,6 +39,7 @@ function envoyerMessage(inputMessage){
         return;
     }
     var contenu = getMessage();
+    console.log(contenu);
     if (contenu === '') {
         return;
     }
